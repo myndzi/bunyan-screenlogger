@@ -270,7 +270,7 @@ function Logger(opts) {
     if (isNaN(om)) { om = OM_FROM_NAME[opts.outputMode]; }
     if (!om) { om = OM_LONG; }
     
-    this.outputMode = opts.outputMode;
+    this.outputMode = om;
     this.jsonIndent = !!opts.jsonIndent;
 }
 util.inherits(Logger, Transform);
@@ -331,7 +331,7 @@ Logger.prototype._transform = function (rec, encoding, cb) {
         var ts = new Date(rec.time);
         
         if (isNaN(ts.getSeconds())) {
-            ts = null;
+            ts = new Date();
         }
         if (!isValidRecord(rec)) {
             this.prependTimestamp(ts, rec);
