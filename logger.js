@@ -555,7 +555,7 @@ Logger.prototype._transform = function (rec, encoding, cb) {
                 value = JSON.stringify(value, null, 2);
                 stringified = true;
             }
-            if (value.indexOf('\n') !== -1 || value.length > 50) {
+            if (value && (value.indexOf('\n') !== -1 || value.length > 50)) {
                 details.push(key + ': ' + value);
             } else if (!stringified && (value.indexOf(' ') != -1 ||
                 value.length === 0))
