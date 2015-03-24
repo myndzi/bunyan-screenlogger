@@ -1,7 +1,8 @@
 {
-  "name": "@eros/bunyan-screenlogger",
-  "version": "0.1.2",
-  "description": "",
+  "name": "bunyan-screenlogger",
+  "version": "1.0.0",
+  "description": "Custom screen logger for Bunyan",
+  "keywords": ["bunyan", "screen", "log", "logging", "logger", "color"],
   "main": "logger.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
