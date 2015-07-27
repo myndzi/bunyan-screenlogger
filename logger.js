@@ -546,19 +546,28 @@ Logger.prototype._transform = function (rec, encoding, cb) {
             delete rec.err;
         }
 
-        var leftover = Object.keys(rec);
-        if (leftover.length) {
-            details.push(
-                indent(
-                    util.inspect(rec, { depth: null, colors: true })
-                )
-            );
+        var leftover = Object.keys(rec), detailsObj = { };
+        for (var i = 0; i < leftover.length; i++) {
+            var key = leftover[i];
+            var value = rec[key];
+            if (typeof value === 'number') {
+                extras.push(key + '=' + value);
+            } else if (typeof (value) !== 'string' || value.length > 50) {
+                detailsObj[key] = value;
+            } else if (value.indexOf(' ') != -1 || value.length === 0) {
+                extras.push(key + '=' + JSON.stringify(value));
+            } else {
+                extras.push(key + '=' + value);
+            }
+        }
+        if (Object.keys(detailsObj).length) {
+          details.push(util.inspect(detailsObj, { depth: null, colors: true }));
         }
 
         var hostnameStr = this.stylize(hostname || '<unknown>', 'GREEN');
         
         extras = (extras.length ? '(' + extras.join(', ') + ')' : '');
-        details = (details.length ? details.join('\n') : '');
+        details = (details.length ? indent(details.join('\n')) : '');
         if (onelineMsg.length) { extras = ' ' + extras; }
         
         if (!short)
