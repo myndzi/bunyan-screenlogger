@@ -547,23 +547,12 @@ Logger.prototype._transform = function (rec, encoding, cb) {
         }
 
         var leftover = Object.keys(rec);
-        for (var i = 0; i < leftover.length; i++) {
-            var key = leftover[i];
-            var value = rec[key];
-            var stringified = false;
-            if (typeof (value) !== 'string') {
-                value = JSON.stringify(value, null, 2);
-                stringified = true;
-            }
-            if (value && (value.indexOf('\n') !== -1 || value.length > 50)) {
-                details.push(key + ': ' + value);
-            } else if (!stringified && (value.indexOf(' ') != -1 ||
-                value.length === 0))
-            {
-                extras.push(key + '=' + JSON.stringify(value));
-            } else {
-                extras.push(key + '=' + value);
-            }
+        if (leftover.length) {
+            details.push(
+                indent(
+                    util.inspect(rec, { depth: null, colors: true })
+                )
+            );
         }
 
         var hostnameStr = this.stylize(hostname || '<unknown>', 'GREEN');
