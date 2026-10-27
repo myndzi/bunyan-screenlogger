@@ -1,3 +1,7 @@
+# Archived
+
+Legacy / unused
+
 # Bunyan-screenlogger
 
 A simple logger made for cleaner screen output. No dependencies.
